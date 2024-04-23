@@ -3,6 +3,6 @@ endpoints:
   - name: Todo API
     port: 8080
     type: REST
-    networkVisibility: Public
+    networkVisibility: Organization
     context: /
     schemaFilePath: openapi.yaml
