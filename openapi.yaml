@@ -1,0 +1,115 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/todo/{title}:
+    get:
+      tags:
+      - todo-controller
+      operationId: getTodoByTitle
+      parameters:
+      - name: title
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+    put:
+      tags:
+      - todo-controller
+      operationId: updateTodoByTitle
+      parameters:
+      - name: title
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+    delete:
+      tags:
+      - todo-controller
+      operationId: deleteTodoById
+      parameters:
+      - name: title
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/todo:
+    get:
+      tags:
+      - todo-controller
+      operationId: getAllTodos
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+    post:
+      tags:
+      - todo-controller
+      operationId: createTodo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    TodoRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+    Todo:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string

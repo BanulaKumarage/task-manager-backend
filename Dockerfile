@@ -1,4 +1,16 @@
-FROM eclipse-temurin:17-jdk-alpine
-COPY target/taskmanager-0.0.1-SNAPSHOT.jar app.jar
+FROM maven:3.8.7-eclipse-temurin-19-alpine
+
+ADD . /java-springboot
+WORKDIR /java-springboot
+
+RUN ls -l
+
+RUN mvn clean install -DskipTests
+
+FROM openjdk:17-alpine
+
+COPY --from=0 "/java-springboot/target/taskmanager-*.jar" app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Fire up our Spring Boot app by default
+CMD [ "sh", "-c", "java -jar /app.jar" ]
